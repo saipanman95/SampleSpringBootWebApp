@@ -1,0 +1,88 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+ext { 
+ 
+}
+
+buildscript {
+    ext { 
+        gradleGitPluginVersion = '1.4.16' 
+        springBootVersion = '1.5.7.RELEASE'
+        jacksonVersion = '2.9.2'
+        lombokVersion = '1.16.18'
+    }
+    repositories {
+        repositories {
+          mavenCentral()
+        }
+        dependencies {
+            classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.7.RELEASE")
+        }
+    }
+    dependencies { 
+        classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: springBootVersion
+    }
+}
+
+group = 'com.mdrsolutions'
+version = determineVersion()
+
+apply plugin: CommonBuildPlugin
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+apply plugin: 'spring-boot'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    jcenter()
+}
+
+dependencies {
+    compile(group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jacksonVersion)
+    compile(group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: jacksonVersion)
+    compile(group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion)
+    compile(group: 'org.projectlombok', name: 'lombok', version: lombokVersion)  
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-actuator')
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-aop')
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-cache')
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc') 
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-security')
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web')
+    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
+}
+
+configurations { 
+    
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+processResources {
+    filesMatching('**/application.yml') {
+        filter(ReplaceTokens, tokens: [name: project.properties['name'], version: project.properties['version']])
+    }
+}
+
+test {
+    reports {
+        junitXml.enabled = true
+    }
+}
+
+def determineVersion() {
+    "$baseVersion${isSnapshotVersion() ? '.SNAPSHOT' : ''}".toString()
+}
+
+def isSnapshotVersion() {
+    !'RELEASE'.equalsIgnoreCase(System.properties['versionType'])
+}
