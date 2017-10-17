@@ -15,9 +15,6 @@ buildscript {
         repositories {
           mavenCentral()
         }
-        dependencies {
-            classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.7.RELEASE")
-        }
     }
     dependencies { 
         classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: springBootVersion
@@ -25,9 +22,8 @@ buildscript {
 }
 
 group = 'com.mdrsolutions'
-version = determineVersion()
-
-apply plugin: CommonBuildPlugin
+version = '1.0.0-SNAPSHOT'
+ 
 apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
@@ -49,8 +45,8 @@ dependencies {
     compile(group: 'org.springframework.boot', name: 'spring-boot-starter-actuator')
     compile(group: 'org.springframework.boot', name: 'spring-boot-starter-aop')
     compile(group: 'org.springframework.boot', name: 'spring-boot-starter-cache')
-    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc') 
-    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-security')
+//    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc') 
+//    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-security')
     compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web')
     testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
 }
@@ -77,12 +73,4 @@ test {
     reports {
         junitXml.enabled = true
     }
-}
-
-def determineVersion() {
-    "$baseVersion${isSnapshotVersion() ? '.SNAPSHOT' : ''}".toString()
-}
-
-def isSnapshotVersion() {
-    !'RELEASE'.equalsIgnoreCase(System.properties['versionType'])
-}
+}  
