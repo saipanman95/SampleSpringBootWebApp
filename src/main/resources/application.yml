@@ -2,9 +2,11 @@ info:
   build:
     name: '@name@'
     version: '@version@'
-multipart:
-    maxFileSize: 10Mb
-    maxRequestSize: 10Mb
 server:
   port: ${port:8090}
 spring: 
+    application:
+        name: '@name@'
+management:
+    security:
+        enabled: false
