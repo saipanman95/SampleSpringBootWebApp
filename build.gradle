@@ -43,10 +43,7 @@ dependencies {
     compile(group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion)
     compile(group: 'org.projectlombok', name: 'lombok', version: lombokVersion)  
     compile(group: 'org.springframework.boot', name: 'spring-boot-starter-actuator')
-    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-aop')
-    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-cache')
-//    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc') 
-//    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-security')
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-aop') 
     compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web')
     testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
 }
